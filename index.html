@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redux basic example</title>
+    <script src="https://unpkg.com/mobx@latest/lib/mobx.umd.js"></script>
+</head>
+<body>
+<div>
+    <p>
+        Counter: <span id="value"></span>
+        <button id="increment">+</button>
+        <button id="decrement">-</button>
+        <button id="incrementIfOdd">Increment if odd</button>
+        <button id="incrementAsync">Increment async</button>
+    </p>
+    <p>
+        Other counter: <span id="otherValue"></span>
+        <button id="incrementOther">Increment other counter</button>
+    </p>
+</div>
+<script>
+    var store = mobx.observable({
+        counter: 0,
+        other: 0
+    });
+
+    mobx.autorun(function() {
+        document.getElementById('value').innerHTML = store.counter;
+        console.log("Store counter was modified!!");
+    });
+
+    mobx.autorun(function() {
+        document.getElementById('otherValue').innerHTML = store.other;
+        console.log("Store other counter was modified!!");
+    });
+
+    document.getElementById('increment')
+        .addEventListener('click', function () {
+            store.counter += 1;
+        });
+
+    document.getElementById('decrement')
+        .addEventListener('click', function () {
+            store.counter -= 1;
+        });
+
+    document.getElementById('incrementIfOdd')
+        .addEventListener('click', function () {
+            if ((store.counter) % 2 == 1) {
+                store.counter++;
+            }
+        });
+
+    document.getElementById('incrementAsync')
+        .addEventListener('click', function () {
+            setTimeout(function () {
+                store.counter++;
+            }, 1000)
+        });
+
+    document.getElementById('incrementOther')
+        .addEventListener('click', function () {
+            store.other++;
+        })
+</script>
+</body>
+</html>
